@@ -1,5 +1,5 @@
 <script>
-function deleteAllCookies() {
+    function deleteAllCookies() {
     var cookies = document.cookie.split(";");
 
     for (var i = 0; i < cookies.length; i++) {
@@ -10,10 +10,61 @@ function deleteAllCookies() {
     }
 }
 
-function clearAndRedirect(link) {
-    deleteAllCookies();
-    document.location = link;
-}
-</script>
+$(document).ready(function() {
+    var test_flag = $.cookie('flag');
+    //get cookie
+    if (test_flag == "flag_is_set") {
+        //if cookie is set clear all cookies once more and redirect
 
-<a href="javascript:clearAndRedirect('start.html')">Start your bacon</a>
+        deleteAllCookies();
+        document.location = "myPage.html";
+    }
+
+    $("#dostuff").click(function() {
+        //if button is clicked
+        //clear all cookies
+        deleteAllCookies();
+        //set a new cookie as flag
+        $.cookie('flag':'flag_is_set');
+        //refresh page
+
+        document.location.reload();
+    });
+
+});​
+</script>
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset="utf-8">
+      <title>
+      </title>
+   </head>
+   <body>
+      <main>
+         <script type="text/javascript">
+            document.cookie = "username=shiv";
+            document.cookie = "CONSENT=YES+IN.en+20170903-09-0";
+            
+            function displayCookies() {
+            
+            	var displayCookies = document.getElementById("display");
+            	displayCookies.innerHTML = document.cookie;
+            }
+            
+            function deleteAllCookies() {
+             var cookies = document.cookie.split(";");
+             for (var i = 0; i < cookies.length; i++) {
+                 var cookie = cookies[i];
+                 var eqPos = cookie.indexOf("=");
+                 var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+                 document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+             }
+            }
+         </script>
+         <button onclick="displayCookies()">Display Cookies</button>
+         <button onclick="deleteAllCookies()">Delete Cookies</button>
+         <p id="display"></p>
+      </main>
+   </body>
+</html>	
